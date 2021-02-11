@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN ">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -30,19 +30,56 @@
 <nav class="navbar navbar-light bg-light" style="opacity: 0.8">
     <div style="color:black;font-size: 18px">仙之梦</div>
     <div class="button">
-        <button type="button" class="btn btn-outline-success">登录</button>
-        <button type="button" class="btn btn-outline-danger">注册</button>
+        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#login">登录</button>
+        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#register">注册</button>
     </div>
 </nav>
+<!-- 登录模态框 -->
+<div class="modal fade" id="login">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">登录-仙之梦</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <?php require "assets/common/login.html" ?>
+            <!-- 模态框底部 -->
+        </div>
+    </div>
+</div>
+<!-- 注册模态框 -->
+<div class="modal fade" id="register">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">注册-仙之梦</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <?php require "assets/common/register.html" ?>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container main">
     <div style="color: white;font-size: 18px;margin: 20px;position: absolute">请选择您要游玩的服务器 :</div>
     <ul class="list container">
-        <li class="btn btn-primary btn-lg btn-block ">一区：诛仙之战</li>
-        <li class="btn btn-secondary btn-lg btn-block">二区：未开放</li>
-        <li class="btn btn-secondary btn-lg btn-block">三区：未开放</li>
-        <li class="btn btn-secondary btn-lg btn-block">四区：未开放</li>
+        <li class="btn btn-primary btn-lg btn-block ">诛仙之战</li>
+        <li class="btn btn-secondary btn-lg btn-block">未开放</li>
+        <li class="btn btn-secondary btn-lg btn-block">未开放</li>
+        <li class="btn btn-secondary btn-lg btn-block">未开放</li>
     </ul>
 </div>
-
 </body>
+<footer>
+<div class="container footer">
+    <div class="footer-title">Copyright © 2021 Drizzle. All Rights Reserved.</div>
+</div>
+</footer>
 </html>
