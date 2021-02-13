@@ -1,14 +1,13 @@
 <?php
 session_start();
 $user = null;
-$name = null;
+$name =null;
 if (isset($_SESSION['userid'])) {
     $user = $_SESSION['userid'];
     require_once 'lib/mysql.php';
     $db = new Mysql();
     $res = $db->table('user')->field('name')->where("Id=$user")->item();
-    $name = $res['name'];
-    header('location:main.php');
+    $name=$res['name'];
 }
 
 ?>
@@ -45,7 +44,6 @@ if (isset($_SESSION['userid'])) {
     <div style="color:black;font-size: 18px"><a href="/">仙之梦</a></div>
     <div class="button">
         <?php
-
         if ($user) {
             $html = <<<EOF
             <span style="font-size: 19px">$name</span>
@@ -63,57 +61,9 @@ if (isset($_SESSION['userid'])) {
         ?>
     </div>
 </nav>
-<!-- 登录模态框 -->
-<div class="modal fade" id="login">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-
-            <!-- 模态框头部 -->
-            <div class="modal-header">
-                <h4 class="modal-title">登录-仙之梦</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- 模态框主体 -->
-            <?php require "assets/common/login.html" ?>
-            <!-- 模态框底部 -->
-        </div>
-    </div>
-</div>
-<!-- 注册模态框 -->
-<div class="modal fade" id="register">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <!-- 模态框头部 -->
-            <div class="modal-header">
-                <h4 class="modal-title">注册-仙之梦</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- 模态框主体 -->
-            <div class="modal-body">
-                <?php require "assets/common/register.html" ?>
-            </div>
-        </div>
-    </div>
-</div>
 <!--suppress CssInvalidFunction -->
-<div class="container main" style="width: 75%;height: 400px;background-color: rgb(67,178,246,0.6);">
-    <div style="color: white;font-size: 18px;margin: 20px;position: absolute">游戏公告 :</div>
-    <div style="color: white;font-size: 15px;margin: 45px;position: absolute;text-align: left">
-        <br>嘿嘿，本游戏正在紧张开发中，开发完成后会在 Github 开源<br><br>
-        游戏介绍 : <br>
-        这是一个类似十年前的wap网页文字游戏，游戏多以文字和图片呈现，像是很久之前的QQ家园里面的 精武堂 召唤之王 之类的文字为主的网游。<br>
-        <br>PS:此游戏是为了学习PHP而做的
-    </div>
-</div>
-<div class="container main">
-    <div style="color: white;font-size: 18px;margin: 20px;position: absolute">请选择您要游玩的服务器 :</div>
-    <ul class="list container">
-        <li class="btn btn-primary btn-lg btn-block ">诛仙之战</li>
-        <li class="btn btn-secondary btn-lg btn-block">未开放</li>
-        <li class="btn btn-secondary btn-lg btn-block">未开放</li>
-        <li class="btn btn-secondary btn-lg btn-block">未开放</li>
-    </ul>
+<div class="container main" style="width: 80%;height: 800px;background-color: rgb(67,178,246,0.6);">
+
 </div>
 </body>
 <footer>

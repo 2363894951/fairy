@@ -13,26 +13,4 @@
     </div>
     <button type="button" class="btn btn-outline-success" onclick="login()">登录</button>
 </div>
-<script>
-    function login() {
-        const userid = $('#userid').val();
-        const password = $('#password').val();
-        if (userid === '') {
-            alert("玩家ID不能为空！")
-            return;
-        }
-        if(password === '')
-        {
-            alert("玩家密码不能为空！")
-            return;
-        }
-        $.post('../../lib/login.php', {userid: userid, password: password}, function (res) {
-            if (res.code === 0) {
-                alert("登录失败！");
-            } else {
-                alert("登录成功！");
-                setTimeout(function (){parent.window.location.reload();},100);
-            }
-        }, 'json')
-    }
-</script>
+<script src="../js/user.js"></script>

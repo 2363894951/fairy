@@ -13,32 +13,4 @@
     </div>
     <button type="submit" class="btn btn-outline-danger" onclick="register()">注册</button>
 </div>
-<script>
-    function register() {
-        const name = $('#name').val();
-        const email = $('#email').val();
-        const paw = $('#paw').val();
-        if (name === '') {
-            alert("请填写玩家昵称！");
-            return;
-        }
-        if (email === '') {
-            alert("请填写玩家邮箱！");
-            return;
-        }
-        if (paw === '') {
-            alert("请填写玩家密码！");
-            return;
-        }
-        $.post('../../lib/register.php', {name: name, email: email, password: paw}, function (res) {
-            if (res.code === 0) {
-                alert("注册失败！" + res.msg);
-            } else {
-                setTimeout(function () {
-                    alert(res.msg);
-                    parent.window.location.reload();
-                }, 100);
-            }
-        }, 'json')
-    }
-</script>
+<script src="../js/user.js"></script>
