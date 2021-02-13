@@ -39,29 +39,54 @@ class Mysql
     }
 
     //封装Sql语句
-    #[Pure] private function build_sql(): string
+    #[Pure] private function build_sql($type, $data = null): string
     {
-        $where = '';
-        if (is_array($where)) {
-            foreach ($this->where as $key => $value) {
-                $value = is_string($value) ? "'" . $value . "'" : $value;
-                $where .= "{$key} = {$value} and ";
+        $sql = '';
+        if ($type == 'select') {
+            $where = '';
+            if (is_array($where)) {
+                foreach ($this->where as $key => $value) {
+                    $value = is_string($value) ? "'" . $value . "'" : $value;
+                    $where .= "{$key} = {$value} and ";
+                }
+            } else {
+                $where = $this->where;
             }
-        } else {
-            $where = $this->where;
+            $where = rtrim($where, ' and ');
+            $sql = "select {$this->filed} from {$this->table} where {$where}";
+            if (isset($this->order)) {
+                $sql .= " order by {$this->order} {$this->order_mode}";
+            }
+
         }
-        $where = rtrim($where, ' and ');
-        $sql = "select {$this->filed} from {$this->table} where {$where}";
-        if (isset($this->order)) {
-            $sql .= " order by {$this->order} {$this->order_mode}";
+        if ($type == 'insert') {
+            $k = '';
+            $v = '';
+            foreach ($data as $key => $value) {
+                $k .= $key . ',';
+                $value = is_string($value) ? "'$value'" : $value;
+                $v .= $value . ',';
+            }
+            $k = rtrim($k, ',');
+            $v = rtrim($v, ',');
+            $sql = "insert into {$this->table}($k) value($v) ";
+
         }
         return $sql;
+    }
+
+    //查询结果排序
+    public function order($order, $order_mode): Mysql
+    {
+        $this->order = $order;
+        $this->order_mode = $order_mode;
+        return $this;
     }
 
     //返回一条数据
     public function item()
     {
-        $sql = $this->build_sql() . " limit 1";
+        $sql = $this->build_sql('select') . " limit 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -69,11 +94,10 @@ class Mysql
     }
 
     //返回多条数据
-    public function list($list_num=null): array
+    public function list($list_num = null): array
     {
-        $sql = $this->build_sql();
-        if(isset($list_num))
-        {
+        $sql = $this->build_sql('select');
+        if (isset($list_num)) {
             $sql .= " limit {$list_num}";
         }
         $stmt = $this->pdo->prepare($sql);
@@ -81,12 +105,13 @@ class Mysql
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //查询结果排序
-    public function order($order,$order_mode): Mysql
+    //插入数据
+    public function insert($data):int
     {
-        $this->order = $order;
-        $this->order_mode = $order_mode;
-        return $this;
+        $sql = $this->build_sql('insert', $data);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $this->pdo->lastInsertId();
     }
 
 }

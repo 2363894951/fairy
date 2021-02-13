@@ -1,17 +1,44 @@
 <div class="modal-body">
-    <form action="../../lib/register.php" method="post">
-        <div class="form-group">
-            <label for="email">邮箱 :</label>
-            <input type="text" class="form-control" id="email" name="email">
-        </div>
-        <div class="form-group">
-            <label for="name">昵称 :</label>
-            <input type="text" class="form-control" id="name" name="name">
-        </div>
-        <div class="form-group">
-            <label for="password">密码 :</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
-        <button type="submit" class="btn btn-outline-danger">注册</button>
-    </form>
+    <div class="form-group">
+        <label for="email">邮箱 :</label>
+        <input type="text" class="form-control" id="email" name="email">
+    </div>
+    <div class="form-group">
+        <label for="name">昵称 :</label>
+        <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <div class="form-group">
+        <label for="paw">密码 :</label>
+        <input type="password" class="form-control" id="paw" name="paw">
+    </div>
+    <button type="submit" class="btn btn-outline-danger" onclick="register()">注册</button>
 </div>
+<script>
+    function register() {
+        const name = $('#name').val();
+        const email = $('#email').val();
+        const paw = $('#paw').val();
+        if (name === '') {
+            alert("请填写玩家昵称！");
+            return;
+        }
+        if (email === '') {
+            alert("请填写玩家邮箱！");
+            return;
+        }
+        if (paw === '') {
+            alert("请填写玩家密码！");
+            return;
+        }
+        $.post('../../lib/register.php', {name: name, email: email, password: paw}, function (res) {
+            if (res.code === 0) {
+                alert("注册失败！" + res.msg);
+            } else {
+                setTimeout(function () {
+                    alert(res.msg);
+                    parent.window.location.reload();
+                }, 100);
+            }
+        }, 'json')
+    }
+</script>

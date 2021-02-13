@@ -1,17 +1,38 @@
 <div class="modal-body">
-    <form action="../../lib/login.php" method="post">
-        <div class="form-group">
-            <label for="userid">玩家ID :</label>
-            <input type="number" class="form-control" id="userid" >
-        </div>
-        <div class="form-group">
-            <label for="password">密码 :</label>
-            <input type="password" class="form-control" id="password">
-        </div>
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="check">
-            <label class="form-check-label" for="check">记住我</label>
-        </div>
-        <button type="submit" class="btn btn-outline-success">登录</button>
-    </form>
+    <div class="form-group">
+        <label for="userid">玩家ID :</label>
+        <input type="number" class="form-control" id="userid" name="userid">
+    </div>
+    <div class="form-group">
+        <label for="password">密码 :</label>
+        <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="check">
+        <label class="form-check-label" for="check">记住我</label>
+    </div>
+    <button type="button" class="btn btn-outline-success" onclick="login()">登录</button>
 </div>
+<script>
+    function login() {
+        const userid = $('#userid').val();
+        const password = $('#password').val();
+        if (userid === '') {
+            alert("玩家ID不能为空！")
+            return;
+        }
+        if(password === '')
+        {
+            alert("玩家密码不能为空！")
+            return;
+        }
+        $.post('../../lib/login.php', {userid: userid, password: password}, function (res) {
+            if (res.code === 0) {
+                alert("登录失败！");
+            } else {
+                alert("登录成功！");
+                setTimeout(function (){parent.window.location.reload();},100);
+            }
+        }, 'json')
+    }
+</script>

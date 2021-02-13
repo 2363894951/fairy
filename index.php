@@ -1,3 +1,16 @@
+<?php
+session_start();
+$user = null;
+$name =null;
+if (isset($_SESSION['userid'])) {
+    $user = $_SESSION['userid'];
+    require_once 'lib/mysql.php';
+    $db = new Mysql();
+    $res = $db->table('user')->field('name')->where("Id=$user")->item();
+    $name=$res['name'];
+}
+
+?>
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -30,8 +43,23 @@
 <nav class="navbar navbar-light bg-light" style="opacity: 0.8">
     <div style="color:black;font-size: 18px">仙之梦</div>
     <div class="button">
-        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#login">登录</button>
-        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#register">注册</button>
+        <?php
+
+        if ($user) {
+            $html = <<<EOF
+            <span>$name</span>
+            <span>($user)</span>
+            <button type="button" class="btn btn-outline-danger" onclick="logout()" ">退出</button>
+            EOF;
+            echo $html;
+        } else {
+            $html = <<<EOF
+            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#login">登录</button>
+            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#register">注册</button>
+            EOF;
+            echo $html;
+        }
+        ?>
     </div>
 </nav>
 <!-- 登录模态框 -->
@@ -78,8 +106,23 @@
 </div>
 </body>
 <footer>
-<div class="container footer">
-    <div class="container footer-title">Copyright © 2021 Drizzle. All Rights Reserved.</div>
-</div>
+    <div class="container footer">
+        <div class="container footer-title">Copyright © 2021 Drizzle. All Rights Reserved.</div>
+    </div>
 </footer>
 </html>
+<script>
+    function logout() {
+        if (!confirm('确定要退出吗？')) {
+            return;
+        }
+        $.get('lib/logout.php', {}, function (res) {
+            if (res.code === 0) {
+                alert('退出成功');
+                setTimeout(function () {
+                    parent.window.location.reload()
+                }, 100);
+            }
+        }, 'json');
+    }
+</script>
