@@ -79,7 +79,7 @@
 </body>
 <footer>
 <div class="container footer">
-    <div class="footer-title">Copyright © 2021 Drizzle. All Rights Reserved.</div>
+    <div class="container footer-title">Copyright © 2021 Drizzle. All Rights Reserved.</div>
 </div>
 </footer>
 </html>
