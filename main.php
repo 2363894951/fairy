@@ -1,14 +1,21 @@
 <?php
 session_start();
 $user = null;
-$name =null;
+$name = null;
+$page = null;
 if (isset($_SESSION['userid'])) {
     $user = $_SESSION['userid'];
     require_once 'lib/mysql.php';
     $db = new Mysql();
     $res = $db->table('user')->field('name')->where("Id=$user")->item();
-    $name=$res['name'];
+    $name = $res['name'];
+} else {
+    header('location:index.php');
 }
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
+
 
 ?>
 <!doctype html>
@@ -62,8 +69,19 @@ if (isset($_SESSION['userid'])) {
     </div>
 </nav>
 <!--suppress CssInvalidFunction -->
-<div class="container main" style="width: 80%;height: 800px;background-color: rgb(67,178,246,0.6);">
-
+<div class="container main" style="width: 90%;height: 800px;background-color: rgb(67,178,246,0.6);">
+    <?php
+    $db = new Mysql();
+    $res = $db->table('role')->field('*')->where("Id=$user")->item();
+    if (!$res && !$page) {
+        include "game/start.php";
+    } else if($page){
+        include "game/$page.php";
+    }
+    else{
+        include "game/index.php";
+    }
+    ?>
 </div>
 </body>
 <footer>
