@@ -13,7 +13,7 @@ if (!$res) {
 }
 session_start();
 
-$_SESSION['userid']=$id;
+$_SESSION['userid'] = $id;
 exit(json_encode(array('code' => 1, 'msg' => '登录成功')));
 
 

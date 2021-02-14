@@ -15,8 +15,6 @@ if (isset($_SESSION['userid'])) {
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
 }
-
-
 ?>
 <!doctype html>
 <html lang="zh-CN">

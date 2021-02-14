@@ -14,7 +14,7 @@ class Mysql
 
     public function __construct()//构造器
     {
-        $dsn = "mysql:host=159.75.52.227;dbname=xm";
+        $dsn = "mysql:host=127.0.0.1;dbname=xm";
         $this->pdo = new PDO($dsn, 'xm', 'snXKiw6wL3yz3Wc7');
     }
 
@@ -106,7 +106,7 @@ class Mysql
     }
 
     //插入数据
-    public function insert($data):int
+    public function insert($data): int
     {
         $sql = $this->build_sql('insert', $data);
         $stmt = $this->pdo->prepare($sql);
