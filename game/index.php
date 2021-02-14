@@ -2,6 +2,10 @@
 $db = new Mysql();
 $user = $_SESSION['userid'];
 $role = $db->table('role')->field('*')->where("Id=$user")->item();
+$role_map = $role['map'];
+if (isset($_GET['map'])) {
+    $role_map = $_GET['map'];
+}
 ?>
 <div style="height: 20px"></div>
 <div style="text-align: left;color: white;font-size: 14px;margin-top: 10px">
@@ -35,19 +39,40 @@ $role = $db->table('role')->field('*')->where("Id=$user")->item();
     <div style="height: 10px"></div>
     <a href="/main.php?page=role&id=self" style="color: #0f6674;font-size: 15px;margin-top: 3px">查看详情</a>
     <div style="height: 20px"></div>
-    <h4 >位置: 残老村</h4>
-    北: <br>
-    南: <br>
-    西: <br>
-    东: <br>
+    <?php
+    $game_map = $db->table('map')->field('*')->where("id=$role_map")->item();
+    ?>
+    <h4>位置: <?php echo $game_map['name']; ?></h4>
+    <?php
+    if ($game_map['N']) {
+        $n = $game_map['N'];
+        $temp = $db->table('map')->field('*')->where("id=$n")->item();
+        echo "北: <a href='main.php?map=$n' style='color: #fd7e14'>" . $temp['name'] . "</a><br>";
+    }
+    if ($game_map['S']) {
+        $s = $game_map['S'];
+        $temp = $db->table('map')->field('*')->where("id=$s")->item();
+        echo "南: <a href='main.php?map=$s'>" . $temp['name'] . "</a> <br>";
+    }
+    if ($game_map['W']) {
+        $w = $game_map['W'];
+        $temp = $db->table('map')->field('*')->where("id=$w")->item();
+        echo "西: <a href='main.php?map=$w'>" . $temp['name'] . "</a> <br>";
+    }
+    if ($game_map['E']) {
+        $e = $game_map['E'];
+        $temp = $db->table('map')->field('*')->where("id=$e")->item();
+        echo "东: <a href='main.php?map=$e'>" . $temp['name'] . "</a> <br>";
+    }
+    ?>
     <div style="height: 20px"></div>
-    <h4 >环境:</h4>
+    <h4>环境:</h4>
     NPC: <br>
     玩家: <br>
     活动: <br>
     怪物: <br>
     <div style="height: 20px"></div>
-    <h4 >功能:</h4>
+    <h4>功能:</h4>
     <div class="btn-group" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-secondary">角色</button>
         <button type="button" class="btn btn-secondary">背包</button>

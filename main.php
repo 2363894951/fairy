@@ -3,14 +3,17 @@ session_start();
 $user = null;
 $name = null;
 $page = null;
+$role_map = null;
 if (isset($_SESSION['userid'])) {
     $user = $_SESSION['userid'];
     require_once 'lib/mysql.php';
     $db = new Mysql();
     $res = $db->table('user')->field('name')->where("Id=$user")->item();
     $name = $res['name'];
+} else if (isset($_GET['map'])) {
+    $role_map = $_GET['map'];
 } else {
-    header('location:index.php');
+    header("Location:index.php");
 }
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
