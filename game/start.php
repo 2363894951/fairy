@@ -40,6 +40,9 @@
                 </label>
             </div>
         </div>
-        <button type="submit" class="btn btn-outline-warning">继续</button>
+        <button type="submit" class="btn btn-outline-warning">
+            <i class="bi bi-arrow-right-square-fill"></i>
+            继续
+        </button>
     </form>
 </div>

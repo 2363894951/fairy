@@ -21,6 +21,7 @@ function login() {
     }, 'json')
 }
 
+// noinspection JSUnresolvedVariable
 function register() {
     const name = $('#name').val();
     const email = $('#email').val();
@@ -39,9 +40,11 @@ function register() {
     }
     $.post('../../lib/register.php', {name: name, email: email, password: paw}, function (res) {
         if (res.code === 0) {
+            // noinspection JSUnresolvedVariable
             alert("注册失败！" + res.msg);
         } else {
             setTimeout(function () {
+                // noinspection JSUnresolvedVariable
                 alert(res.msg);
                 parent.window.location.reload();
             }, 100);
