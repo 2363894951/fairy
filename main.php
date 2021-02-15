@@ -83,6 +83,7 @@ if (isset($_GET['page'])) {
         include "game/index.php";
     }
     ?>
+    <div style="height: 20px"></div>
 </div>
 </body>
 <footer>

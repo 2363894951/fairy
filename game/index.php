@@ -101,5 +101,5 @@ if (isset($_GET['map'])) {
         <button type="button" class="btn btn-secondary">聊天</button>
         <button type="button" class="btn btn-secondary">反馈</button>
     </div>
-    <div style="height: 20px"></div>
+
 </div>
