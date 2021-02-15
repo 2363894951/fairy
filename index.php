@@ -104,7 +104,8 @@ if (isset($_SESSION['userid'])) {
         <br>嘿嘿，本游戏正在紧张开发中，开发完成后会在 Github 开源<br><br>
         游戏介绍 : <br>
         这是一个类似十年前的wap网页文字游戏，游戏多以文字和图片呈现，像是很久之前的QQ家园里面的 精武堂 召唤之王 之类的文字为主的网游。<br>
-        <br>Github: <a target="_blank" href="https://github.com/Drizzle365/fairy"> https://github.com/Drizzle365/fairy</a>
+        <br>Github: <a target="_blank" href="https://github.com/Drizzle365/fairy">
+            https://github.com/Drizzle365/fairy</a>
     </div>
 </div>
 <div class="container main">

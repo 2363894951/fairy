@@ -2,6 +2,8 @@
 $db = new Mysql();
 $user = $_SESSION['userid'];
 $role = $db->table('role')->field('*')->where("Id=$user")->item();
+$lv = $role['Lv'];
+$lv_exp = $db->table('lv')->field('exp')->where("Lv=$lv")->item();
 ?>
 <div style="height: 20px"></div>
 <div style="text-align: left;color: white;font-size: 14px;margin-top: 10px">
@@ -9,7 +11,10 @@ $role = $db->table('role')->field('*')->where("Id=$user")->item();
     <h4>个人信息: </h4>
     姓名：<?php echo $role['name']; ?><br>
     等级：Lv <?php echo $role['Lv']; ?><br>
-    经验：<?php echo $role['Exp']; ?> <br>
+    经验：<?php echo $role['Exp'] . '/' . $lv_exp['exp']; ?>
+    <a>
+        <button type="button" class="btn btn-warning" style="margin-left: 5px">升级</button>
+    </a>
     <div>
         <span style="float: left">血量：</span>
         <div class="progress" style="width: 100px;float: left;margin-top: 4px">
