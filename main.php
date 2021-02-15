@@ -70,7 +70,7 @@ if (isset($_GET['page'])) {
     </div>
 </nav>
 <!--suppress CssInvalidFunction -->
-<div class="container main" style="width: 90%;height: 800px;background-color: rgb(67,178,246,0.6);position: relative">
+<div class="container main" style="width: 90%;height: auto;background-color: rgb(67,178,246,0.6);position: relative">
     <?php
     $db = new Mysql();
     $res = $db->table('role')->field('*')->where("Id=$user")->item();
