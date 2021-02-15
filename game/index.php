@@ -44,6 +44,12 @@ if (isset($_GET['map'])) {
     $game_map = $db->table('map')->field('*')->where("id=$role_map")->item();
     ?>
     <h4>位置: <?php echo $game_map['name']; ?></h4>
+    <div style="height: 10px"></div>
+    <?php
+    echo "<img src='../assets/image/map/map_$role_map.jpg' alt='' style='width: 150px;height: 150px'>";
+    ?>
+    <div style="height: 10px"></div>
+    <h6><?php echo $game_map['content']; ?></h6>
     <?php
     if ($game_map['N']) {
         $n = $game_map['N'];
