@@ -5,6 +5,7 @@ $role = $db->table('role')->field('*')->where("Id=$user")->item();
 $role_map = $role['map'];
 if (isset($_GET['map'])) {
     $role_map = $_GET['map'];
+    $db->table('role')->where("Id={$user}")->update(array('map'=>$role_map));
 }
 ?>
 <div style="height: 20px"></div>

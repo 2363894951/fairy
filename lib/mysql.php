@@ -38,22 +38,34 @@ class Mysql
         return $this;
     }
 
+    //封装where语句
+    #[Pure] private function build_where(): string
+    {
+        $where = '';
+        if (is_array($where)) {
+            foreach ($this->where as $key => $value) {
+                $value = is_string($value) ? "'" . $value . "'" : $value;
+                $where .= "{$key} = {$value} and ";
+            }
+        } else {
+            $where = $this->where;
+        }
+        $where = rtrim($where, ' and ');
+        if ($where) {
+            $where = "where {$where}";
+        }
+        return $where;
+    }
+
     //封装Sql语句
+
+    /** @noinspection SqlWithoutWhere */
     #[Pure] private function build_sql($type, $data = null): string
     {
         $sql = '';
         if ($type == 'select') {
-            $where = '';
-            if (is_array($where)) {
-                foreach ($this->where as $key => $value) {
-                    $value = is_string($value) ? "'" . $value . "'" : $value;
-                    $where .= "{$key} = {$value} and ";
-                }
-            } else {
-                $where = $this->where;
-            }
-            $where = rtrim($where, ' and ');
-            $sql = "select {$this->filed} from {$this->table} where {$where}";
+            $where = $this->build_where();
+            $sql = "select {$this->filed} from {$this->table} {$where}";
             if (isset($this->order)) {
                 $sql .= " order by {$this->order} {$this->order_mode}";
             }
@@ -72,6 +84,22 @@ class Mysql
             $sql = "insert into {$this->table}($k) value($v) ";
 
         }
+        if ($type == 'delete') {
+            $where = $this->build_where();
+            $sql = "delete from {$this->table} {$where}";
+        }
+        if ($type == 'update') {
+            $where = $this->build_where();
+            $set = '';
+            foreach ($data as $key => $value) {
+                $value = is_string($value) ? "'" . $value . "'" : $value;
+                $set .= "{$key}={$value},";
+            }
+            $set=rtrim($set,',');
+            $set = $set?" set {$set}":$set;
+            $sql = "update {$this->table} {$set} {$where}";
+        }
+        //echo $sql;exit();
         return $sql;
     }
 
@@ -114,5 +142,22 @@ class Mysql
         return $this->pdo->lastInsertId();
     }
 
+    //删除数据,并返回影响行数
+    public function delete(): int
+    {
+        $sql = $this->build_sql('delete');
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    //更新数据,并返回影响行数
+    public function update($data): int
+    {
+        $sql = $this->build_sql('update',$data);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
 }
 
