@@ -37,7 +37,7 @@ if (isset($_GET['map'])) {
             </span>
     </div>
     <div style="height: 10px"></div>
-    <a href="/main.php?page=role&id=self" style="color: #0f6674;font-size: 15px;margin-top: 3px">查看详情</a>
+    <a href="/main.php?page=role&role=self" style="color: #0f6674;font-size: 15px;margin-top: 3px">查看详情</a>
     <div style="height: 20px"></div>
     <?php
     $game_map = $db->table('map')->field('*')->where("id=$role_map")->item();
@@ -73,14 +73,61 @@ if (isset($_GET['map'])) {
     ?>
     <div style="height: 20px"></div>
     <h4>环境:</h4>
-    NPC: <br>
-    玩家: <br>
-    活动: <br>
-    怪物: <br>
+
+    NPC:
+    <?php
+    if ($game_map['npc']) {
+        $map_npc = explode(',', $game_map['npc']);
+        echo "| ";
+        foreach ($map_npc as $key => $value) {
+            $npc = $db->table('npc')->field('name')->where("Id=$value")->item();
+            echo "<a href='main.php?npc=$value&page=npc' style='color: #f0e6c6'>" . $npc['name'] . "</a> | ";
+        }
+    }
+    echo "<br>"
+    ?>
+
+    玩家:
+    <?php
+    if (($game_map['role'])) {
+        $map_role = explode(',', $game_map['role']);
+        echo "| ";
+        foreach ($map_role as $key => $value) {
+            $role = $db->table('role')->field('name')->where("Id=$value")->item();
+            echo "<a href='main.php?role=$value&page=role' style='color: #f0e6c6'>" . $role['name'] . "</a> | ";
+        }
+    }
+    echo "<br>"
+    ?>
+
+    活动:
+    <?php
+    if ($game_map['activity']) {
+        $map_activity = explode(',', $game_map['activity']);
+        echo "| ";
+        foreach ($map_activity as $key => $value) {
+            $activity = $db->table('activity')->field('name')->where("Id=$value")->item();
+            echo "<a href='main.php?activity=$value&page=activity' style='color: #f0e6c6'>" . $activity['name'] . "</a> | ";
+        }
+    }
+    echo "<br>"
+    ?>
+    怪物:
+    <?php
+    if ($game_map['monster']) {
+        $map_monster = explode(',', $game_map['monster']);
+        echo "| ";
+        foreach ($map_monster as $key => $value) {
+            $monster = $db->table('monster')->field('name')->where("Id=$value")->item();
+            echo "<a href='main.php?monster=$value&page=monster' style='color: #f0e6c6'>" . $monster['name'] . "</a> | ";
+        }
+    }
+    echo "<br>"
+    ?>
     <div style="height: 20px"></div>
     <h4>功能:</h4>
     <div class="btn-group" role="group" aria-label="Basic example">
-        <a href="/main.php?page=role&id=self" style="margin-left: 5px">
+        <a href="/main.php?page=role&role=self" style="margin-left: 5px">
             <button type="button" class="btn btn-secondary">角色</button>
         </a>
         <a href="/main.php?page=unfinished" style="margin-left: 5px">
@@ -111,7 +158,7 @@ if (isset($_GET['map'])) {
             <button type="button" class="btn btn-secondary">副本</button>
         </a>
         <a href="/main.php?page=unfinished" style="margin-left: 5px">
-            <button type="button" class="btn btn-secondary">神魔</button>
+            <button type="button" class="btn btn-secondary">技能</button>
         </a>
     </div>
     <div style="height: 10px"></div>
